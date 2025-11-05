@@ -1,0 +1,360 @@
+/* --- 変数定義 --- */
+:root {
+    --miku-blue-primary: #87CEEB; /* スカイブルー (メインの青) */
+    --miku-blue-light: #B0E0E6;   /* パウダーブルー (薄い青) */
+    --miku-blue-dark: #4682B4;    /* スチールブルー (アクセントの青) */
+    --text-color-dark: #333;      /* 濃い文字色 */
+    --text-color-light: #f0f0f0;  /* 薄い文字色 (背景が濃い部分用) */
+    --background-gradient-start: #E0F7FA; /* 背景グラデーション開始 (ミントクリーム) */
+    --background-gradient-end: #B3E0EB;   /* 背景グラデーション終了 (ライトスカイブルー) */
+    --container-bg: rgba(255, 255, 255, 0.9); /* コンテナの背景 (少し透明) */
+    --shadow-light: rgba(0, 0, 0, 0.08); /* 薄い影 */
+    --shadow-medium: rgba(0, 0, 0, 0.15); /* 中くらいの影 */
+    --shadow-strong: rgba(0, 0, 0, 0.25); /* 強い影 */
+    --border-light: rgba(255, 255, 255, 0.3); /* 薄いボーダー */
+}
+
+/* --- 全体設定 --- */
+body {
+    font-family: 'Poppins', sans-serif; /* Google FontsのPoppinsを使用 */
+    background: linear-gradient(135deg, var(--background-gradient-start) 0%, var(--background-gradient-end) 100%);
+    color: var(--text-color-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    overflow: hidden; /* スクロールバーを非表示 */
+    position: relative; /* 背景アニメーションの基準 */
+    line-height: 1.6;
+}
+
+/* --- 背景アニメーション --- */
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at top left, var(--miku-blue-light) 0%, transparent 40%),
+                radial-gradient(circle at bottom right, var(--miku-blue-primary) 0%, transparent 40%);
+    opacity: 0.3;
+    animation: backgroundFlow 20s infinite alternate ease-in-out;
+    z-index: -1; /* 最背面 */
+}
+
+@keyframes backgroundFlow {
+    0% { background-position: 0% 0%, 100% 100%; }
+    100% { background-position: 100% 100%, 0% 0%; }
+}
+
+/* --- コンテナ --- */
+.container {
+    background: var(--container-bg);
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 20px 40px var(--shadow-medium);
+    max-width: 500px;
+    width: 90%;
+    backdrop-filter: blur(15px); /* より強いぼかし効果 */
+    border: 1px solid var(--border-light);
+    animation: slideIn 0.8s ease-out forwards; /* 出現アニメーション */
+    transform: translateY(20px); /* 初期位置 */
+    opacity: 0; /* 初期非表示 */
+}
+
+@keyframes slideIn {
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* --- ヘッダー --- */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid var(--miku-blue-primary);
+    position: relative;
+}
+
+.header-icon {
+    font-size: 3em;
+    color: var(--miku-blue-dark);
+    margin-bottom: 10px;
+    animation: bounceIn 1s ease-out;
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.1); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+h1 {
+    color: var(--miku-blue-dark);
+    font-size: 2.5em;
+    margin: 0;
+    font-weight: 700;
+    text-shadow: 1px 1px 3px var(--shadow-light);
+}
+
+.subtitle {
+    color: var(--text-color-dark);
+    font-size: 1.1em;
+    font-weight: 400;
+    margin-top: 5px;
+}
+
+/* --- コントロールボタン --- */
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.control-button {
+    background-color: var(--miku-blue-light);
+    color: var(--text-color-dark);
+    border: none;
+    padding: 12px 22px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.05em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px var(--shadow-light);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.control-button:hover {
+    background-color: var(--miku-blue-primary);
+    color: var(--text-color-light);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 18px var(--shadow-medium);
+}
+
+.control-button.active {
+    background-color: var(--miku-blue-dark);
+    color: white;
+    box-shadow: 0 6px 15px var(--shadow-strong);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transform: translateY(-1px);
+}
+
+.control-button i {
+    font-size: 1.2em;
+}
+
+/* --- 曲リスト --- */
+.music-list-wrapper {
+    max-height: 380px; /* リストの高さを調整 */
+    overflow-y: auto;
+    margin-bottom: 30px;
+    padding-right: 5px; /* スクロールバーとの隙間 */
+}
+
+/* スクロールバーのスタイル */
+.music-list-wrapper::-webkit-scrollbar {
+    width: 12px;
+}
+
+.music-list-wrapper::-webkit-scrollbar-track {
+    background: #f8f8f8;
+    border-radius: 6px;
+}
+
+.music-list-wrapper::-webkit-scrollbar-thumb {
+    background-color: var(--miku-blue-primary);
+    border-radius: 6px;
+    border: 3px solid #f8f8f8;
+}
+
+#music-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.music-item {
+    padding: 18px 25px;
+    margin-bottom: 12px;
+    background-color: #fefefe;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+    color: var(--text-color-dark);
+    font-weight: 500;
+    font-size: 1.15em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 3px 8px var(--shadow-light);
+    position: relative; /* アクティブな際のインジケーター用 */
+    overflow: hidden; /* ボーダーアニメーション用 */
+}
+
+.music-item::before { /* ホバー/アクティブ時の左側のボーダーアニメーション */
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 5px;
+    background-color: var(--miku-blue-primary);
+    transform: scaleY(0);
+    transition: transform 0.3s ease-out;
+}
+
+.music-item:hover {
+    background-color: var(--miku-blue-light);
+    color: white;
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 10px 25px var(--shadow-medium);
+}
+
+.music-item:hover::before {
+    transform: scaleY(1);
+}
+
+.music-item.active {
+    background-color: var(--miku-blue-primary);
+    color: white;
+    box-shadow: 0 8px 20px var(--miku-blue-dark);
+    animation: activeGlow 1.8s infinite alternate ease-in-out;
+    transform: scale(1.02);
+}
+
+.music-item.active::before {
+    transform: scaleY(1);
+    background-color: white;
+}
+
+@keyframes activeGlow {
+    from { transform: scale(1.01); box-shadow: 0 8px 20px rgba(70, 130, 180, 0.4); }
+    to { transform: scale(1.03); box-shadow: 0 12px 25px rgba(70, 130, 180, 0.6); }
+}
+
+
+/* --- 再生中表示 --- */
+#now-playing {
+    text-align: center;
+    padding-top: 25px;
+    border-top: 2px dashed var(--miku-blue-light);
+    margin-top: 20px;
+}
+
+.now-playing-label {
+    font-size: 1em;
+    color: var(--text-color-dark);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.current-song-title {
+    color: var(--miku-blue-dark);
+    font-size: 1.5em;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px var(--shadow-light);
+}
+
+/* --- ビジュアライザー --- */
+.visualizer-wrapper {
+    height: 80px; /* ビジュアライザーの高さを大きく */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    margin-top: 15px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.5); /* 半透明の背景 */
+    padding: 10px 0;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.visualizer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    height: 100%;
+}
+
+.bar {
+    width: 8px; /* バーの幅をさらに大きく */
+    min-height: 5px; /* 最小高さを設定 */
+    background-color: var(--miku-blue-primary);
+    margin: 0 4px; /* バーの間隔を調整 */
+    border-radius: 4px;
+    transform-origin: bottom;
+    animation: audio-wave 1.2s infinite alternate ease-in-out; /* より滑らかなアニメーション */
+    opacity: 0.9;
+    box-shadow: 0 0 5px var(--miku-blue-light);
+}
+
+/* アニメーションのタイミングをずらす */
+.bar:nth-child(3n) { animation-delay: 0.1s; }
+.bar:nth-child(3n+1) { animation-delay: 0.2s; }
+.bar:nth-child(3n+2) { animation-delay: 0.3s; }
+/* さらに多くのバーに対応 */
+.bar:nth-child(5n) { animation-delay: 0.05s; }
+.bar:nth-child(5n+1) { animation-delay: 0.15s; }
+.bar:nth-child(5n+2) { animation-delay: 0.25s; }
+.bar:nth-child(5n+3) { animation-delay: 0.35s; }
+.bar:nth-child(5n+4) { animation-delay: 0.45s; }
+
+
+/* よりダイナミックなビジュアライザーアニメーション */
+@keyframes audio-wave {
+    0% { height: 10%; background-color: var(--miku-blue-light); transform: scaleY(0.8); }
+    50% { height: 100%; background-color: var(--miku-blue-primary); transform: scaleY(1.1); }
+    100% { height: 10%; background-color: var(--miku-blue-dark); transform: scaleY(0.9); }
+}
+
+/* --- レスポンシブ対応 --- */
+@media (max-width: 600px) {
+    .container {
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px var(--shadow-medium);
+        width: 95%;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .subtitle {
+        font-size: 0.9em;
+    }
+
+    .controls {
+        flex-direction: column; /* ボタンを縦に並べる */
+        gap: 10px;
+    }
+
+    .control-button {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 15px;
+        font-size: 1em;
+    }
+
+    .music-item {
+        padding: 15px 20px;
+        font-size: 1em;
+    }
+
+    .visualizer-wrapper {
+        height: 60px;
+    }
+
+    .bar {
+        width: 6px;
+        margin: 0 3px;
+    }
+}
