@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miku's Dream Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <video id="video-player" loop style="display: none;"></video>
+
+    <div class="background-animation"></div> <div class="container">
+        <div class="header">
+            <i class="fas fa-headphones-alt header-icon"></i>
+            <h1>Miku's Dream Player</h1>
+            <p class="subtitle">あなたのお気に入りの曲をループで</p>
+        </div>
+        
+        <div class="controls">
+            <button id="toggle-loop" class="control-button" aria-label="リピート再生">
+                <i class="fas fa-redo"></i>
+                <span>リピート</span>
+            </button>
+            <button id="toggle-sequential" class="control-button active" aria-label="順番再生">
+                <i class="fas fa-stream"></i>
+                <span>順番再生</span>
+            </button>
+        </div>
+
+        <div class="music-list-wrapper">
+            <ul id="music-list">
+                </ul>
+        </div>
+        
+        <div id="now-playing">
+            <p class="now-playing-label">再生中:</p>
+            <span id="current-song-title" class="current-song-title">選択されていません</span>
+            <div class="visualizer-wrapper">
+                <div class="visualizer">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
